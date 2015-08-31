@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" ng-app ="MainApp">
+<head>
+	<meta charset="UTF-8">
+  <meta http-equiv ="web store example">
+  <meta http-equiv ="Content-Type" content ="text/html";>
+
+	<title>Web Store Example</title>
+
+	<script src ="https://code.jquery.com/jquery.js"></script>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   
+    <script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+ 
+    <!-- importando angular js -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+
+    
+    <div class="jumbotron">
+    	<h1>Example web Store !</h1>
+  	</div>
+    
+    <style>
+     
+     #prueba{
+      
+      width:800px;
+  
+
+    }
+
+
+    </style>
+    
+</head>
+<body ng-controller="mainController">
+ <center><button type="button" class="btn btn-default ">Log in</button></center>
+	<div class="page-header">
+  		<h3>Cars data base &nbsp
+	
+  <div class="col-lg-6">	
+	<div class="row" id="prueba">
+  		<div class="col-lg-8">
+    		<div class="input-group">
+      			 				 
+      			<input type="text" class="form-control" id ="find" placeHolder="Search..." ng-model ="query">
+      			<span class="input-group-btn">
+      			<button class="btn btn-default" type="button">Go!</button>
+      		</span>
+    		</div><!-- /input-group -->
+  		</div><!-- /.col-lg-6 -->
+  	</div><!--row -->
+  </h3>
+    </div>
+    </div>	
+
+  		<div class="container" id="store">
+        <h4>How Many ? : <span class="label label-success">{{cars.length}}</span></h4>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4" ng-repeat ="cars in car | filter:query">
+                <div class="thumbnail">
+                       <div class="caption">
+                              <h3 id = "nombre">Model :  {{cars.model}}</h3>
+        <p>
+           Company :{{cars.company}}<br>
+           Colour: {{cars.colour}} <br>
+           Type:  {{cars.type}} <br>
+           Features:{{cars.colour}} <br>
+           Price: {{cars.price}} <br>
+            
+          
+        </p>
+        
+        
+        <p><a class="btn btn-primary" role="button" onClick = "buy()">Buy</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+	 
+
+  <script>
+
+
+angular.module('MainApp', ['ngRoute'])
+
+function mainController($scope, $http) {
+  $scope.cars = {};
+  $scope.selected = false;
+  
+
+  // Obtenemos todos los datos de la base de datos
+    $http.get("https://api.mongolab.com/api/1/databases/cars/collections/cars?apiKey=_vLDq9lvUO9ci-RsLIyj5McCzMxnI2uO").success(function(data) {
+    $scope.car = data;
+    console.log(data);
+  })
+  .error(function(data) {
+    console.log('Error: ' + data);
+  });
+
+
+
+}
+
+
+  </script>
+
+  <script type = "text/JavaScript">
+
+
+function buy(){
+
+confirm("Are you sure you want to buy this item ?!");
+
+}
+
+
+  </script>
+
+
+ 
+</body>
+
+</html>
